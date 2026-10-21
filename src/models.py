@@ -329,3 +329,39 @@ class CargoState:
                     neighbors.append(nb)
 
         return neighbors
+
+    def to_dict(self) -> Dict:
+        return {
+            "ship": {
+                "id": self.ship.id,
+                "w": self.ship.w,
+                "l": self.ship.l,
+                "max_capacity": self.ship.max_capacity,
+            },
+            "vehicles": {
+                vid: {
+                    "id": vehicle.id,
+                    "w": vehicle.w,
+                    "l": vehicle.l,
+                    "shipping_fee": vehicle.shipping_fee,
+                    "weight": vehicle.weight,
+                    "eta": vehicle.eta,
+                }
+                for vid, vehicle in self.vehicles.items()
+            },
+            "placements": {
+                vid: {
+                    "vehicle_id": placement.vehicle_id,
+                    "in_ship": placement.in_ship,
+                    "x": placement.x,
+                    "y": placement.y,
+                    "orientation": placement.orientation,
+                }
+                for vid, placement in self.placements.items()
+            },
+            "use_bonus_objective": self.use_bonus_objective,
+            "is_valid": self.is_valid(),
+            "objective": self.evaluate(),
+            "total_weight": self.get_total_weight(),
+            "total_shipping_fee": self.get_total_shipping_fee(),
+        }
