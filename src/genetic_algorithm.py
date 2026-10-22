@@ -68,8 +68,6 @@ class GeneticAlgorithm:
         return selected.copy()
 
     def _crossover(self, parent1: CargoState, parent2: CargoState) -> Tuple[CargoState, CargoState]:
-        import random
-        
         # Cek masuk atau tidak
         if random.random() > self.crossover_rate:
             return parent1.copy(), parent2.copy()
@@ -87,3 +85,13 @@ class GeneticAlgorithm:
         child2.invalidate_cache()
         
         return child1, child2
+
+    def _mutate(self, state: CargoState) -> CargoState:
+        # Random untuk menentukan mutasi
+        if random.random() < self.mutation_rate:
+            mutated_state = state.get_random_neighbor(max_attempts=15)
+            
+            if mutated_state is not None:
+                return mutated_state
+                
+        return state
