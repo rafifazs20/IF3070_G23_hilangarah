@@ -1,3 +1,4 @@
+import random
 from typing import List, Dict, Tuple
 from src.models import CargoState, Ship, Vehicle
 
@@ -54,3 +55,14 @@ class GeneticAlgorithm:
         else:
             penalty = (oob * 500.0) + (ovl * 500.0) + (ex_w * 50.0)
             return float(base_fee) - penalty
+
+    def _roulette_wheel_selection(self, population: List[CargoState]) -> CargoState:
+        fitnesses = [self._calculate_fitness(ind) for ind in population]
+        min_fit = min(fitnesses)
+        
+        shifted_fitnesses = [f - min_fit + 1.0 for f in fitnesses]
+        
+        # Pilih individu, semakin besar fitness semakin besar persentase
+        selected = random.choices(population, weights=shifted_fitnesses, k=1)[0]
+        
+        return selected.copy()
