@@ -2,7 +2,7 @@ import json
 from typing import Dict, Tuple
 from src.models import Ship, Vehicle
 
-def get_default_problem() -> Tuple[Ship, Dict[str, Vehicle]]:
+def get_default_problem(num_ships: int = 1) -> Tuple[Ship | list[Ship], Dict[str, Vehicle]]:
     """
     Menghasilkan studi kasus standar PT Intim Line sesuai contoh tabel variabel
     pada dokumen spesifikasi (Ukuran geladak kapal w:10, l:20, MaxCapacity: 500,
@@ -42,12 +42,22 @@ def get_default_problem() -> Tuple[Ship, Dict[str, Vehicle]]:
         )
         for item in raw_vehicles
     }
-    return ship, vehicles
+    if num_ships < 1:
+        raise ValueError("Jumlah kapal minimal satu.")
+    if num_ships == 1:
+        return ship, vehicles
+    ships = [Ship(ship.w, ship.l, ship.max_capacity, f"{ship.id}-{index + 1}")
+             for index in range(num_ships)]
+    return (ships[0] if num_ships == 1 else ships), vehicles
 
 
-def save_problem_to_json(filepath: str, ship: Ship, vehicles: Dict[str, Vehicle]):
+def save_problem_to_json(filepath: str, ship: Ship | list[Ship], vehicles: Dict[str, Vehicle]):
+    ships = list(ship) if isinstance(ship, (list, tuple)) else [ship]
+    ship_data = [
+        {"id": item.id, "Dimensions": {"w": item.w, "l": item.l}, "MaxCapacity": item.max_capacity}
+        for item in ships
+    ]
     data = {
-        "ship": {"id": ship.id, "Dimensions": {"w": ship.w, "l": ship.l}, "MaxCapacity": ship.max_capacity},
         "vehicles": [
             {
                 "id": v.id,
@@ -59,20 +69,25 @@ def save_problem_to_json(filepath: str, ship: Ship, vehicles: Dict[str, Vehicle]
             for v in vehicles.values()
         ]
     }
+    if len(ships) == 1:
+        data["ship"] = ship_data[0]
+    else:
+        data["ships"] = ship_data
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
 
-def load_problem_from_json(filepath: str) -> Tuple[Ship, Dict[str, Vehicle]]:
+def load_problem_from_json(filepath: str) -> Tuple[Ship | list[Ship], Dict[str, Vehicle]]:
     with open(filepath, "r", encoding="utf-8") as f:
         data = json.load(f)
-    s_data = data["ship"]
-    ship = Ship(
-        w=s_data["Dimensions"]["w"],
-        l=s_data["Dimensions"]["l"],
-        max_capacity=s_data["MaxCapacity"],
-        id=s_data.get("id", "Ship-1")
-    )
+    raw_ships = data.get("ships") or [data["ship"]]
+    ships = [Ship(
+        w=item["Dimensions"]["w"],
+        l=item["Dimensions"]["l"],
+        max_capacity=item["MaxCapacity"],
+        id=item.get("id", f"Ship-{index + 1}"),
+    ) for index, item in enumerate(raw_ships)]
+    ship = ships[0] if len(ships) == 1 else ships
     vehicles = {}
     for v_data in data["vehicles"]:
         vid = v_data["id"]

@@ -45,6 +45,17 @@ def _run_hc(name: str, algorithm: Any, ship: Any, vehicles: dict, args: argparse
 def _record(name: str, run: int, seed: int, initial: CargoState, final: CargoState,
             history: list[float], iterations: int, duration: float,
             **configuration: Any) -> dict[str, Any]:
+    ship_summary = []
+    for ship in final.ships:
+        onboard = [vid for vid, placement in final.placements.items()
+                   if placement.in_ship and (placement.ship_id or final.ship.id) == ship.id]
+        ship_summary.append({
+            "ship_id": ship.id,
+            "vehicle_ids": onboard,
+            "vehicle_count": len(onboard),
+            "total_weight": final.get_total_weight(ship.id),
+            "shipping_fee": sum(final.vehicles[vid].shipping_fee for vid in onboard),
+        })
     return {
         "algorithm": name, "run": run, "seed": seed,
         "initial_objective": float(initial.evaluate()),
@@ -52,6 +63,7 @@ def _record(name: str, run: int, seed: int, initial: CargoState, final: CargoSta
         "highest_objective": float(max(history, default=final.evaluate())),
         "initial_state": initial.to_dict(),
         "final_state": final.to_dict(),
+        "ship_summary": ship_summary,
         "objective_history": [float(value) for value in history],
         "iterations": iterations, "duration_seconds": duration,
         "final_valid": final.is_valid(), **configuration,
@@ -59,20 +71,27 @@ def _record(name: str, run: int, seed: int, initial: CargoState, final: CargoSta
 
 
 def _print_run_progress(index: int, total: int, record: dict[str, Any], best: float) -> None:
+    loads = ", ".join(
+        f"{item['ship_id']}={item['vehicle_count']} kendaraan"
+        for item in record["ship_summary"]
+    )
     print(
         f"[{index:02d}/{total:02d}] {record['algorithm']:<24} "
         f"run {record['run']}: awal={record['initial_objective']:.2f}, "
         f"akhir={record['final_objective']:.2f}, "
         f"tertinggi={record['highest_objective']:.2f}, "
         f"tertinggi global={best:.2f}, "
+        f"muatan=[{loads}], "
         f"iterasi={record['iterations']}, "
         f"durasi={record['duration_seconds']:.2f}s"
     )
 
 
 def run_experiments(args: argparse.Namespace) -> dict[str, Any]:
-    ship, vehicles = load_problem_from_json(args.data) if args.data else get_default_problem()
-    out_dir = Path(args.output_dir)
+    ship, vehicles = load_problem_from_json(args.data) if args.data else get_default_problem(args.num_ships)
+    ships = list(ship) if isinstance(ship, (list, tuple)) else [ship]
+    mode_dir = "multi_ship" if len(ships) > 1 else "single_ship"
+    out_dir = Path(args.output_dir) if args.output_dir else Path("output/experiments") / mode_dir
     image_dir = out_dir / "states"
     out_dir.mkdir(parents=True, exist_ok=True)
     records: list[dict[str, Any]] = []
@@ -139,13 +158,17 @@ def run_experiments(args: argparse.Namespace) -> dict[str, Any]:
             _print_run_progress(len(records), total_runs, record, best_score)
 
     for label, (initial, final) in states.items():
-        plot_deck(initial, image_dir / f"{label}_initial.png", f"{label} - Initial State")
-        plot_deck(final, image_dir / f"{label}_final.png", f"{label} - Final State")
+        ship_tag = "fleet" if len(initial.ships) > 1 else _slug(initial.ship.id)
+        plot_deck(initial, image_dir / f"{label}_{ship_tag}_initial.png",
+                  f"{label} - Initial State")
+        plot_deck(final, image_dir / f"{label}_{ship_tag}_final.png",
+                  f"{label} - Final State")
 
     plot_paths = plot_experiment_results(records, out_dir / "plots")
     results = {
-        "problem": {"ship_id": ship.id, "width": ship.w, "length": ship.l,
-                    "max_capacity": ship.max_capacity, "vehicle_count": len(vehicles)},
+        "problem": {"ships": [{"ship_id": item.id, "width": item.w, "length": item.l,
+                                "max_capacity": item.max_capacity} for item in ships],
+                    "ship_count": len(ships), "vehicle_count": len(vehicles)},
         "configuration": {
             "hc_runs_per_variant": 3, "sa_runs": 3,
             "ga_population_sizes": args.population_sizes,
@@ -182,6 +205,8 @@ def _slug(value: str) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Otomatisasi eksperimen HC, SA, dan 18 konfigurasi GA.")
     parser.add_argument("--data", help="Dataset JSON (default: dataset bawaan).")
+    parser.add_argument("--num-ships", type=int, default=1,
+                        help="Jumlah kapal saat menggunakan dataset bawaan.")
     parser.add_argument("--seed", type=int, default=2301)
     parser.add_argument("--max-iterations", type=int, default=100)
     parser.add_argument("--max-sideways-moves", type=int, default=20)
@@ -194,9 +219,9 @@ def main() -> None:
     parser.add_argument("--generation-counts", type=int, nargs="+", default=[50, 100, 150])
     parser.add_argument("--mutation-rate", type=float, default=0.1)
     parser.add_argument("--crossover-rate", type=float, default=0.8)
-    parser.add_argument("--output-dir", default="output/experiments")
+    parser.add_argument("--output-dir", help="Folder output; default terpisah untuk single_ship/multi_ship.")
     args = parser.parse_args()
-    if args.max_iterations < 0 or args.max_restarts < 1:
+    if args.max_iterations < 0 or args.max_restarts < 1 or args.num_ships < 1:
         parser.error("max-iterations harus >= 0 dan max-restarts harus >= 1")
     if any(size < 2 for size in args.population_sizes) or any(count < 1 for count in args.generation_counts):
         parser.error("ukuran populasi minimal 2 dan jumlah generasi minimal 1")

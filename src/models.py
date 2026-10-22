@@ -35,14 +35,21 @@ class VehiclePlacement:
     x: int = -1
     y: int = -1
     orientation: str = "Horizontal"
+    ship_id: Optional[str] = None
 
     def copy(self) -> 'VehiclePlacement':
-        return VehiclePlacement(self.vehicle_id, self.in_ship, self.x, self.y, self.orientation)
+        return VehiclePlacement(self.vehicle_id, self.in_ship, self.x, self.y, self.orientation, self.ship_id)
 
 
 class CargoState:
-    def __init__(self, ship: Ship, vehicles: Dict[str, Vehicle], placements: Dict[str, VehiclePlacement], use_bonus_objective: bool = False):
-        self.ship = ship
+    def __init__(self, ship: Ship | List[Ship], vehicles: Dict[str, Vehicle], placements: Dict[str, VehiclePlacement], use_bonus_objective: bool = False):
+        self.ships = list(ship) if isinstance(ship, (list, tuple)) else [ship]
+        if not self.ships:
+            raise ValueError("Armada harus memiliki minimal satu kapal.")
+        if len({item.id for item in self.ships}) != len(self.ships):
+            raise ValueError("ID setiap kapal harus unik.")
+        self.ship = self.ships[0]
+        self._ships_by_id = {item.id: item for item in self.ships}
         self.vehicles = vehicles
         self.placements = placements
         self.use_bonus_objective = use_bonus_objective
@@ -50,45 +57,62 @@ class CargoState:
 
     def copy(self) -> 'CargoState':
         new_placements = {vid: p.copy() for vid, p in self.placements.items()}
-        return CargoState(self.ship, self.vehicles, new_placements, self.use_bonus_objective)
+        return CargoState(self.ships, self.vehicles, new_placements, self.use_bonus_objective)
+
+    def _resolve_ship(self, ship_id: Optional[str]) -> Ship:
+        if ship_id is None:
+            return self.ship
+        try:
+            return self._ships_by_id[ship_id]
+        except KeyError as exc:
+            raise ValueError(f"Kapal tidak dikenal: {ship_id}") from exc
 
     def invalidate_cache(self):
         self._cached_value = None
 
-    def get_grid(self) -> List[List[Optional[str]]]:
-        grid = [[None for _ in range(self.ship.w)] for _ in range(self.ship.l)]
+    def get_grid(self, ship_id: Optional[str] = None) -> List[List[Optional[str]]]:
+        ship = self._resolve_ship(ship_id)
+        grid = [[None for _ in range(ship.w)] for _ in range(ship.l)]
         for vid, p in self.placements.items():
-            if p.in_ship:
+            if p.in_ship and (p.ship_id or self.ship.id) == ship.id:
                 v = self.vehicles[vid]
                 eff_w, eff_l = v.get_effective_dimensions(p.orientation)
                 for dy in range(eff_l):
                     for dx in range(eff_w):
                         gx, gy = p.x + dx, p.y + dy
-                        if 0 <= gx < self.ship.w and 0 <= gy < self.ship.l:
+                        if 0 <= gx < ship.w and 0 <= gy < ship.l:
                             grid[gy][gx] = vid
         return grid
 
-    def get_total_weight(self) -> int:
-        return sum(self.vehicles[vid].weight for vid, p in self.placements.items() if p.in_ship)
+    def get_total_weight(self, ship_id: Optional[str] = None) -> int:
+        return sum(self.vehicles[vid].weight for vid, p in self.placements.items()
+                   if p.in_ship and (ship_id is None or (p.ship_id or self.ship.id) == ship_id))
 
     def get_total_shipping_fee(self) -> int:
         return sum(self.vehicles[vid].shipping_fee for vid, p in self.placements.items() if p.in_ship)
 
     def count_violations(self) -> Tuple[int, int, int]:
-        grid_count = [[0 for _ in range(self.ship.w)] for _ in range(self.ship.l)]
-        out_of_bounds, overlap, total_weight = 0, 0, 0
+        grid_counts = {
+            ship.id: [[0 for _ in range(ship.w)] for _ in range(ship.l)]
+            for ship in self.ships
+        }
+        ship_weights = {ship.id: 0 for ship in self.ships}
+        out_of_bounds, overlap = 0, 0
 
         for vid, p in self.placements.items():
             if not p.in_ship: continue
             v = self.vehicles[vid]
-            total_weight += v.weight
+            ship_id = p.ship_id or self.ship.id
+            ship = self._resolve_ship(ship_id)
+            grid_count = grid_counts[ship.id]
+            ship_weights[ship.id] += v.weight
             eff_w, eff_l = v.get_effective_dimensions(p.orientation)
 
-            if p.x < 0 or p.y < 0 or (p.x + eff_w) > self.ship.w or (p.y + eff_l) > self.ship.l:
+            if p.x < 0 or p.y < 0 or (p.x + eff_w) > ship.w or (p.y + eff_l) > ship.l:
                 for dy in range(eff_l):
                     for dx in range(eff_w):
                         gx, gy = p.x + dx, p.y + dy
-                        if gx < 0 or gx >= self.ship.w or gy < 0 or gy >= self.ship.l:
+                        if gx < 0 or gx >= ship.w or gy < 0 or gy >= ship.l:
                             out_of_bounds += 1
                         else:
                             grid_count[gy][gx] += 1
@@ -100,25 +124,37 @@ class CargoState:
                         grid_count[gy][gx] += 1
                         if grid_count[gy][gx] > 1: overlap += 1
 
-        excess_weight = max(0, total_weight - self.ship.max_capacity)
+        excess_weight = sum(
+            max(0, ship_weights[ship.id] - ship.max_capacity)
+            for ship in self.ships
+        )
         return out_of_bounds, overlap, excess_weight
 
     def is_valid(self) -> bool:
         oob, ovl, ex_w = self.count_violations()
         return (oob == 0) and (ovl == 0) and (ex_w == 0)
 
-    def can_place_vehicle(self, vid: str, x: int, y: int, orientation: str, ignore_vids: Optional[set] = None) -> bool:
+    def can_place_vehicle(self, vid: str, x: int, y: int, orientation: str,
+                          ignore_vids: Optional[set] = None,
+                          ship_id: Optional[str] = None) -> bool:
         ignore_vids = {vid} if ignore_vids is None else set(ignore_vids) | {vid}
         v = self.vehicles[vid]
+        current = self.placements.get(vid)
+        target_ship = self._resolve_ship(ship_id or (current.ship_id if current and current.in_ship else None))
         eff_w, eff_l = v.get_effective_dimensions(orientation)
 
-        if x < 0 or y < 0 or (x + eff_w) > self.ship.w or (y + eff_l) > self.ship.l: return False
+        if x < 0 or y < 0 or (x + eff_w) > target_ship.w or (y + eff_l) > target_ship.l: return False
 
-        current_weight = sum(self.vehicles[other_id].weight for other_id, p in self.placements.items() if p.in_ship and other_id not in ignore_vids)
-        if current_weight + v.weight > self.ship.max_capacity: return False
+        current_weight = sum(
+            self.vehicles[other_id].weight for other_id, p in self.placements.items()
+            if p.in_ship and other_id not in ignore_vids
+            and (p.ship_id or self.ship.id) == target_ship.id
+        )
+        if current_weight + v.weight > target_ship.max_capacity: return False
 
         for other_id, p in self.placements.items():
-            if not p.in_ship or other_id in ignore_vids: continue
+            if (not p.in_ship or other_id in ignore_vids
+                    or (p.ship_id or self.ship.id) != target_ship.id): continue
             other_v = self.vehicles[other_id]
             ow, ol = other_v.get_effective_dimensions(p.orientation)
             no_overlap = (x + eff_w <= p.x) or (p.x + ow <= x) or (y + eff_l <= p.y) or (p.y + ol <= y)
@@ -155,9 +191,39 @@ class CargoState:
         return self._cached_value
 
     @classmethod
-    def generate_random_initial_state(cls, ship: Ship, vehicles: Dict[str, Vehicle], use_bonus_objective: bool = False) -> 'CargoState':
+    def generate_random_initial_state(cls, ship: Ship | List[Ship], vehicles: Dict[str, Vehicle], use_bonus_objective: bool = False) -> 'CargoState':
+        ships = list(ship) if isinstance(ship, (list, tuple)) else [ship]
+        if len(ships) > 1:
+            placements = {vid: VehiclePlacement(vid, False) for vid in vehicles}
+            state = cls(ships, vehicles, placements, use_bonus_objective)
+            vehicle_ids = list(vehicles)
+            random.shuffle(vehicle_ids)
+            for vid in vehicle_ids:
+                if random.random() >= 0.85:
+                    continue
+                options = []
+                for target in ships:
+                    for orientation in ("Horizontal", "Vertical"):
+                        width, length = vehicles[vid].get_effective_dimensions(orientation)
+                        if width <= target.w and length <= target.l:
+                            options.append((target, orientation))
+                random.shuffle(options)
+                for target, orientation in options:
+                    width, length = vehicles[vid].get_effective_dimensions(orientation)
+                    coords = [(x, y) for x in range(target.w - width + 1)
+                              for y in range(target.l - length + 1)]
+                    random.shuffle(coords)
+                    for x, y in coords[:15]:
+                        if state.can_place_vehicle(vid, x, y, orientation, ship_id=target.id):
+                            state.placements[vid] = VehiclePlacement(
+                                vid, True, x, y, orientation, target.id
+                            )
+                            break
+                    if state.placements[vid].in_ship:
+                        break
+            return state
         placements = {vid: VehiclePlacement(vid, False, -1, -1, "Horizontal") for vid in vehicles}
-        state = cls(ship, vehicles, placements, use_bonus_objective)
+        state = cls(ships[0], vehicles, placements, use_bonus_objective)
         vehicle_ids = list(vehicles.keys())
         random.shuffle(vehicle_ids)
 
@@ -181,6 +247,8 @@ class CargoState:
         REVISI: Mengembalikan None jika gagal menemukan state baru, BUKAN self.copy().
         Ini mencegah SA mendeteksi Delta E = 0 secara artifisial.
         """
+        if len(self.ships) > 1:
+            return self._get_random_fleet_neighbor(max_attempts)
         vids = list(self.vehicles.keys())
 
         for _ in range(max_attempts):
@@ -256,6 +324,8 @@ class CargoState:
         REVISI: Menghapus sampling. Mengecek SELURUH koordinat, orientasi, dan Swap secara exhaustive.
         Sangat krusial untuk Steepest Ascent Hill-Climbing agar tidak bias.
         """
+        if len(self.ships) > 1:
+            return self._get_all_fleet_neighbors()
         neighbors: List[CargoState] = []
         vids = list(self.vehicles.keys())
 
@@ -330,8 +400,72 @@ class CargoState:
 
         return neighbors
 
+    def _get_all_fleet_neighbors(self) -> List['CargoState']:
+        neighbors = []
+        for vid, placement in self.placements.items():
+            if placement.in_ship:
+                removed = self.copy()
+                removed.placements[vid] = VehiclePlacement(vid, False)
+                removed.invalidate_cache()
+                neighbors.append(removed)
+
+            vehicle = self.vehicles[vid]
+            for ship in self.ships:
+                for orientation in ("Horizontal", "Vertical"):
+                    width, length = vehicle.get_effective_dimensions(orientation)
+                    if width > ship.w or length > ship.l:
+                        continue
+                    for x in range(ship.w - width + 1):
+                        for y in range(ship.l - length + 1):
+                            if (placement.in_ship and placement.x == x and placement.y == y
+                                    and placement.orientation == orientation
+                                    and (placement.ship_id or self.ship.id) == ship.id):
+                                continue
+                            if not self.can_place_vehicle(
+                                vid, x, y, orientation, ship_id=ship.id
+                            ):
+                                continue
+                            neighbor = self.copy()
+                            neighbor.placements[vid] = VehiclePlacement(
+                                vid, True, x, y, orientation, ship.id
+                            )
+                            neighbor.invalidate_cache()
+                            neighbors.append(neighbor)
+        return neighbors
+
+    def _get_random_fleet_neighbor(self, max_attempts: int) -> Optional['CargoState']:
+        vehicle_ids = list(self.vehicles)
+        for _ in range(max_attempts):
+            vid = random.choice(vehicle_ids)
+            placement = self.placements[vid]
+            neighbor = self.copy()
+            if placement.in_ship and random.random() < 0.2:
+                neighbor.placements[vid] = VehiclePlacement(vid, False)
+                neighbor.invalidate_cache()
+                return neighbor
+
+            vehicle = self.vehicles[vid]
+            target = random.choice(self.ships)
+            orientation = random.choice(("Horizontal", "Vertical"))
+            width, length = vehicle.get_effective_dimensions(orientation)
+            if width > target.w or length > target.l:
+                continue
+            x = random.randrange(target.w - width + 1)
+            y = random.randrange(target.l - length + 1)
+            if (placement.in_ship and placement.x == x and placement.y == y
+                    and placement.orientation == orientation
+                    and (placement.ship_id or self.ship.id) == target.id):
+                continue
+            if neighbor.can_place_vehicle(vid, x, y, orientation, ship_id=target.id):
+                neighbor.placements[vid] = VehiclePlacement(
+                    vid, True, x, y, orientation, target.id
+                )
+                neighbor.invalidate_cache()
+                return neighbor
+        return None
+
     def to_dict(self) -> Dict:
-        return {
+        data = {
             "ship": {
                 "id": self.ship.id,
                 "w": self.ship.w,
@@ -356,6 +490,7 @@ class CargoState:
                     "x": placement.x,
                     "y": placement.y,
                     "orientation": placement.orientation,
+                    **({"ship_id": placement.ship_id or self.ship.id} if len(self.ships) > 1 and placement.in_ship else {}),
                 }
                 for vid, placement in self.placements.items()
             },
@@ -364,4 +499,22 @@ class CargoState:
             "objective": self.evaluate(),
             "total_weight": self.get_total_weight(),
             "total_shipping_fee": self.get_total_shipping_fee(),
+            "ship_totals": {
+                ship.id: {
+                    "total_weight": self.get_total_weight(ship.id),
+                    "shipping_fee": sum(
+                        self.vehicles[vid].shipping_fee
+                        for vid, placement in self.placements.items()
+                        if placement.in_ship and (placement.ship_id or self.ship.id) == ship.id
+                    ),
+                }
+                for ship in self.ships
+            },
         }
+        if len(self.ships) > 1:
+            data["ships"] = [
+                {"id": ship.id, "w": ship.w, "l": ship.l,
+                 "max_capacity": ship.max_capacity}
+                for ship in self.ships
+            ]
+        return data

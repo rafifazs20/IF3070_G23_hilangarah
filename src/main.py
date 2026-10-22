@@ -69,17 +69,28 @@ def run_genetic_algorithm(ship: Any, vehicles: dict, args: argparse.Namespace) -
     return algorithm.run()
 
 
-def print_result(name: str, run_number: int, initial: float, final: float, iterations: int, duration: float, valid: bool) -> None:
+def print_result(name: str, run_number: int, initial: float, final: float,
+                 iterations: int, duration: float, valid: bool,
+                 state: CargoState | None = None) -> None:
     print(
         f"{name} run {run_number}: objective {initial:.2f} -> {final:.2f}, "
         f"iterasi={iterations}, durasi={duration:.3f}s, valid={valid}"
     )
+    if state and len(state.ships) > 1:
+        for ship in state.ships:
+            onboard = [vid for vid, placement in state.placements.items()
+                       if placement.in_ship and (placement.ship_id or state.ship.id) == ship.id]
+            fee = sum(state.vehicles[vid].shipping_fee for vid in onboard)
+            weight = state.get_total_weight(ship.id)
+            print(f"  {ship.id}: {len(onboard)} kendaraan, fee={fee}, berat={weight}/{ship.max_capacity}")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Pilih algoritma pencarian untuk masalah pemuatan kapal.")
     parser.add_argument("--algorithm", choices=ALGORITHMS, help="Jalankan pilihan langsung tanpa menu.")
     parser.add_argument("--data", help="Path dataset JSON; gunakan dataset bawaan jika tidak diisi.")
+    parser.add_argument("--num-ships", type=int, default=1,
+                        help="Jumlah kapal untuk dataset bawaan (minimal 1).")
     parser.add_argument("--seed", type=int, default=2301)
     parser.add_argument("--repeats", type=int, default=3, help="Jumlah run Hill-Climbing dan Simulated Annealing.")
     parser.add_argument("--max-iterations", type=int, default=1000)
@@ -97,7 +108,8 @@ def main() -> None:
 
     if (args.repeats < 1 or args.max_iterations < 0 or args.population_size < 2
             or args.generations < 1 or args.max_sideways_moves < 0
-            or args.max_neighbor_attempts < 1 or args.max_restarts < 1):
+            or args.max_neighbor_attempts < 1 or args.max_restarts < 1
+            or args.num_ships < 1):
         parser.error("Periksa repeats, batas iterasi, konfigurasi Hill-Climbing, dan ukuran populasi.")
     if not 0 <= args.mutation_rate <= 1 or not 0 <= args.crossover_rate <= 1:
         parser.error("mutation-rate dan crossover-rate harus berada pada rentang 0 sampai 1")
@@ -112,7 +124,7 @@ def main() -> None:
         "Simulated Annealing",
         "Genetic Algorithm",
     )
-    ship, vehicles = load_problem_from_json(args.data) if args.data else get_default_problem()
+    ship, vehicles = load_problem_from_json(args.data) if args.data else get_default_problem(args.num_ships)
     seed_offset = 0
 
     while True:
@@ -139,15 +151,19 @@ def main() -> None:
 
             if name in ALGORITHMS[:4]:
                 result = run_hill_climbing(name, ship, vehicles, args)
-                print_result(name, run_number, result.initial_state.evaluate(), result.final_state.evaluate(), result.iterations, result.duration_seconds, result.final_state.is_valid())
+                print_result(name, run_number, result.initial_state.evaluate(), result.final_state.evaluate(),
+                             result.iterations, result.duration_seconds, result.final_state.is_valid(),
+                             result.final_state)
             elif name == "simulated-annealing":
                 final, metrics = run_simulated_annealing(ship, vehicles, args)
-                print_result(name, run_number, metrics["initial_value"], metrics["final_value"], metrics["iterations_ran"], metrics["duration_seconds"], final.is_valid())
+                print_result(name, run_number, metrics["initial_value"], metrics["final_value"],
+                             metrics["iterations_ran"], metrics["duration_seconds"], final.is_valid(), final)
             else:
                 start = perf_counter()
                 final, history_max, _ = run_genetic_algorithm(ship, vehicles, args)
                 initial_value = history_max[0] if history_max else final.evaluate()
-                print_result(name, run_number, initial_value, final.evaluate(), len(history_max), perf_counter() - start, final.is_valid())
+                print_result(name, run_number, initial_value, final.evaluate(), len(history_max),
+                             perf_counter() - start, final.is_valid(), final)
 
         if args.algorithm:
             break
