@@ -1,31 +1,14 @@
-from dataclasses import dataclass
-from math import isclose
+
 from random import choice
 from time import perf_counter
 from typing import Any
 
-
-@dataclass
-class HillClimbingResult:
-    initial_state: Any
-    final_state: Any
-    objective_history: list[float]
-    iterations: int
-    accepted_moves: int
-    duration_seconds: float
-    termination_reason: str
-
-    def to_dict(self) -> dict:
-        return {
-            "initial_state": self.initial_state.to_dict(),
-            "final_state": self.final_state.to_dict(),
-            "final_objective": self.final_state.evaluate(),
-            "objective_history": self.objective_history,
-            "iterations": self.iterations,
-            "accepted_moves": self.accepted_moves,
-            "duration_seconds": self.duration_seconds,
-            "termination_reason": self.termination_reason,
-        }
+from .hill_climbing_helper import (
+    HillClimbingResult,
+    get_valid_neighbors,
+    is_equal_objective,
+    is_strictly_better,
+)
 
 
 def steepest_ascent_hill_climbing(
@@ -51,15 +34,9 @@ def steepest_ascent_hill_climbing(
 
     while iterations < max_iterations:
         iterations += 1
-
         current_value = float(current.evaluate())
 
-        neighbors = current.get_all_neighbors()
-        valid_neighbors = [
-            neighbor
-            for neighbor in neighbors
-            if neighbor.is_valid()
-        ]
+        valid_neighbors = get_valid_neighbors(current)
 
         if not valid_neighbors:
             objective_history.append(current_value)
@@ -71,12 +48,7 @@ def steepest_ascent_hill_climbing(
             for neighbor in valid_neighbors
         )
 
-        if best_value <= current_value or isclose(
-            best_value,
-            current_value,
-            rel_tol=0.0,
-            abs_tol=1e-9,
-        ):
+        if not is_strictly_better(best_value, current_value):
             objective_history.append(current_value)
             termination_reason = "local_optimum"
             break
@@ -84,11 +56,9 @@ def steepest_ascent_hill_climbing(
         best_neighbors = [
             neighbor
             for neighbor in valid_neighbors
-            if isclose(
+            if is_equal_objective(
                 float(neighbor.evaluate()),
                 best_value,
-                rel_tol=0.0,
-                abs_tol=1e-9,
             )
         ]
 
