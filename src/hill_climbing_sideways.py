@@ -1,4 +1,3 @@
-
 from random import choice
 from time import perf_counter
 from typing import Any, List, Tuple

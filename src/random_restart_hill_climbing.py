@@ -1,4 +1,3 @@
-
 from time import perf_counter
 from typing import Dict
 
@@ -17,11 +16,10 @@ def random_restart_hill_climbing(
     use_bonus_objective: bool = False,
 ) -> HillClimbingResult:
     """
-    Run multiple independent Steepest Ascent searches from random initial
-    states and return the best final state found.
+    Run Steepest Ascent Hill-Climbing from multiple random initial states.
 
     max_restarts is the total number of independent attempts, including
-    the first attempt.
+    the first attempt. The best final state across all attempts is returned.
     """
     if max_restarts < 1:
         raise ValueError("max_restarts harus minimal 1.")
@@ -34,6 +32,7 @@ def random_restart_hill_climbing(
     start_time = perf_counter()
     restart_results = []
 
+    # Execute independent hill-climbing searches.
     for restart_number in range(1, max_restarts + 1):
         initial_state = CargoState.generate_random_initial_state(
             ship=ship,
@@ -60,10 +59,12 @@ def random_restart_hill_climbing(
 
         restart_results.append(result)
 
-    # Select the run that achieved the highest final objective.
+    # Select the restart with the highest final objective.
     best_restart_index = max(
         range(len(restart_results)),
-        key=lambda index: restart_results[index].final_state.evaluate(),
+        key=lambda index: (
+            restart_results[index].final_state.evaluate()
+        ),
     )
 
     best_result = restart_results[best_restart_index]
@@ -76,16 +77,31 @@ def random_restart_hill_climbing(
         result.accepted_moves for result in restart_results
     )
 
-    # Aggregate the best objective found so far after each search iteration.
-    # This trace remains non-decreasing across restarts.
+    # Build the best-so-far objective history across all restarts.
     best_seen = float(restart_results[0].objective_history[0])
+
     aggregate_history = [best_seen]
+    history_iterations = [0]
+    cumulative_iterations = 0
 
-    for result in restart_results:
-        for value in result.objective_history[1:]:
-            best_seen = max(best_seen, float(value))
+    for restart_index, result in enumerate(restart_results):
+        # Record the initial candidate of each subsequent restart.
+        if restart_index > 0:
+            initial_value = float(result.initial_state.evaluate())
+            best_seen = max(best_seen, initial_value)
+
             aggregate_history.append(best_seen)
+            history_iterations.append(cumulative_iterations)
 
+        # Record the best objective discovered after each inner iteration.
+        for value in result.objective_history[1:]:
+            cumulative_iterations += 1
+            best_seen = max(best_seen, float(value))
+
+            aggregate_history.append(best_seen)
+            history_iterations.append(cumulative_iterations)
+
+    # Keep a complete summary of every restart for reproducibility.
     restart_summaries = []
 
     for restart_number, result in enumerate(
@@ -136,5 +152,6 @@ def random_restart_hill_climbing(
             ],
             "restart_results": restart_summaries,
             "total_iterations": total_iterations,
+            "objective_history_iterations": history_iterations,
         },
     )

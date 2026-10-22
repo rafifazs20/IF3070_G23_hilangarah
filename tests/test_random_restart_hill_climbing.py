@@ -1,4 +1,3 @@
-
 import unittest
 from unittest.mock import patch
 
@@ -9,13 +8,19 @@ from src.random_restart_hill_climbing import (
 
 
 class TinyState:
+    """Minimal deterministic state for testing restart orchestration."""
+
     def __init__(self, name, value, valid=True):
         self.name = name
         self.value = value
         self.valid = valid
 
     def copy(self):
-        return TinyState(self.name, self.value, self.valid)
+        return TinyState(
+            self.name,
+            self.value,
+            self.valid,
+        )
 
     def is_valid(self):
         return self.valid
@@ -31,16 +36,22 @@ class TinyState:
         }
 
 
-def make_result(initial_value, final_value, history, iterations):
-    initial = TinyState("initial", initial_value)
-    final = TinyState("final", final_value)
-
+def make_result(
+    initial_state,
+    final_value,
+    history,
+    iterations,
+    accepted_moves,
+):
     return HillClimbingResult(
-        initial_state=initial,
-        final_state=final,
+        initial_state=initial_state.copy(),
+        final_state=TinyState(
+            f"final-{initial_state.name}",
+            final_value,
+        ),
         objective_history=history,
         iterations=iterations,
-        accepted_moves=max(0, len(history) - 1),
+        accepted_moves=accepted_moves,
         duration_seconds=0.01,
         termination_reason="local_optimum",
     )
@@ -58,37 +69,56 @@ class RandomRestartHillClimbingTests(unittest.TestCase):
         ]
 
         self.results = [
-            make_result(10, 12, [10.0, 11.0, 12.0], 2),
-            make_result(9, 9, [9.0, 9.0], 1),
-            make_result(15, 16, [15.0, 16.0], 1),
+            make_result(
+                self.initial_states[0],
+                final_value=12,
+                history=[10.0, 11.0, 12.0],
+                iterations=2,
+                accepted_moves=2,
+            ),
+            make_result(
+                self.initial_states[1],
+                final_value=9,
+                history=[9.0, 9.0],
+                iterations=1,
+                accepted_moves=0,
+            ),
+            make_result(
+                self.initial_states[2],
+                final_value=16,
+                history=[15.0, 16.0],
+                iterations=1,
+                accepted_moves=1,
+            ),
         ]
 
     def run_with_mocks(self, max_restarts=3):
-        with (
-            patch(
-                "src.random_restart_hill_climbing."
-                "CargoState.generate_random_initial_state",
-                side_effect=self.initial_states,
-            ) as generator,
-            patch(
+        with patch(
+            "src.random_restart_hill_climbing."
+            "CargoState.generate_random_initial_state",
+            side_effect=self.initial_states,
+        ) as generator:
+            with patch(
                 "src.random_restart_hill_climbing."
                 "steepest_ascent_hill_climbing",
                 side_effect=self.results,
-            ) as search,
-        ):
-            result = random_restart_hill_climbing(
-                ship=self.ship,
-                vehicles=self.vehicles,
-                max_restarts=max_restarts,
-                max_iterations_per_restart=10,
-            )
+            ) as search:
+                result = random_restart_hill_climbing(
+                    ship=self.ship,
+                    vehicles=self.vehicles,
+                    max_restarts=max_restarts,
+                    max_iterations_per_restart=10,
+                )
 
         return result, generator, search
 
     def test_returns_best_final_state(self):
         result, _, _ = self.run_with_mocks()
 
-        self.assertEqual(result.final_state.evaluate(), 16.0)
+        self.assertEqual(
+            result.final_state.evaluate(),
+            16.0,
+        )
         self.assertEqual(
             result.metadata["best_restart_number"],
             3,
@@ -106,11 +136,11 @@ class RandomRestartHillClimbingTests(unittest.TestCase):
             3,
         )
 
-    def test_aggregates_iteration_counts(self):
+    def test_aggregates_iteration_and_move_counts(self):
         result, _, _ = self.run_with_mocks()
 
         self.assertEqual(result.iterations, 4)
-        self.assertEqual(result.accepted_moves, 4)
+        self.assertEqual(result.accepted_moves, 3)
         self.assertEqual(
             result.metadata["iterations_per_restart"],
             [2, 1, 1],
@@ -125,7 +155,12 @@ class RandomRestartHillClimbingTests(unittest.TestCase):
 
         self.assertEqual(
             result.objective_history,
-            [10.0, 11.0, 12.0, 12.0, 16.0],
+            [10.0, 11.0, 12.0, 12.0, 12.0, 15.0, 16.0],
+        )
+
+        self.assertEqual(
+            result.metadata["objective_history_iterations"],
+            [0, 1, 2, 2, 3, 3, 4],
         )
 
         self.assertTrue(
@@ -140,12 +175,13 @@ class RandomRestartHillClimbingTests(unittest.TestCase):
 
         self.assertEqual(
             len(result.objective_history),
-            result.iterations + 1,
+            len(result.metadata["objective_history_iterations"]),
         )
 
     def test_first_initial_state_and_best_final_state(self):
         result, _, _ = self.run_with_mocks()
 
+        self.assertEqual(result.initial_state.name, "start-1")
         self.assertEqual(result.initial_state.evaluate(), 10.0)
         self.assertEqual(result.final_state.evaluate(), 16.0)
 
@@ -156,7 +192,10 @@ class RandomRestartHillClimbingTests(unittest.TestCase):
 
         self.assertEqual(len(summaries), 3)
         self.assertEqual(
-            [item["final_objective"] for item in summaries],
+            [
+                item["final_objective"]
+                for item in summaries
+            ],
             [12.0, 9.0, 16.0],
         )
 
@@ -177,19 +216,29 @@ class RandomRestartHillClimbingTests(unittest.TestCase):
             )
 
     def test_rejects_invalid_generated_initial_state(self):
-        invalid_state = TinyState("invalid", 10, valid=False)
+        invalid_state = TinyState(
+            "invalid",
+            10,
+            valid=False,
+        )
 
         with patch(
             "src.random_restart_hill_climbing."
             "CargoState.generate_random_initial_state",
             return_value=invalid_state,
         ):
-            with self.assertRaises(ValueError):
-                random_restart_hill_climbing(
-                    self.ship,
-                    self.vehicles,
-                    max_restarts=1,
-                )
+            with patch(
+                "src.random_restart_hill_climbing."
+                "steepest_ascent_hill_climbing",
+            ) as search:
+                with self.assertRaises(ValueError):
+                    random_restart_hill_climbing(
+                        self.ship,
+                        self.vehicles,
+                        max_restarts=1,
+                    )
+
+                search.assert_not_called()
 
 
 if __name__ == "__main__":
