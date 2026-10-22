@@ -24,6 +24,15 @@ class SimulatedAnnealing:
         current_state = initial_state
         current_value = current_state.evaluate()
         
+        history_obj: List[float] = [current_value]
+        history_prob: List[float] = []
+        
+        # Tambahan variabel stuck & rejections
+        stuck_frequency = 0
+        consecutive_rejections = 0
+        
+        start_time = time.time()
+        
         for t in range(self.max_iterations):
             temperature = self.schedule(t)
             if temperature < self.min_temperature:
@@ -31,12 +40,13 @@ class SimulatedAnnealing:
                 
             next_state = current_state.get_random_neighbor()
             next_value = next_state.evaluate()
-            
             delta_e = next_value - current_value
             
             if delta_e > 0:
                 current_state = next_state
                 current_value = next_value
+                history_prob.append(1.0)
+                consecutive_rejections = 0  # Reset rejection
             else:
                 exponent = delta_e / temperature
                 if exponent < -700:
@@ -44,8 +54,32 @@ class SimulatedAnnealing:
                 else:
                     acceptance_probability = math.exp(exponent)
                 
+                history_prob.append(acceptance_probability)
+                
                 if random.random() < acceptance_probability:
                     current_state = next_state
                     current_value = next_value
+                    consecutive_rejections = 0  # Reset rejection
+                else:
+                    # Logika perhitungan stuck
+                    consecutive_rejections += 1
+                    if consecutive_rejections > 20:
+                        stuck_frequency += 1
+                        consecutive_rejections = 0  # Reset agar tidak overcounting
+            
+            history_obj.append(current_value)
+            
+        end_time = time.time()
         
-        return current_state, {}    
+        metrics = {
+            "initial_value": initial_state.evaluate(),
+            "final_value": current_value,
+            "duration_seconds": end_time - start_time,
+            "iterations_ran": len(history_obj) - 1,
+            "history_obj": history_obj,
+            "history_prob": history_prob,
+            "stuck_frequency": stuck_frequency,  # Injeksi stuck_frequency ke metrics
+            "is_valid": current_state.is_valid()
+        }
+        
+        return current_state, metrics
