@@ -41,6 +41,8 @@ class SimulatedAnnealing:
                 break
                 
             next_state = current_state.get_random_neighbor()
+            if next_state is None:
+                break
             next_value = next_state.evaluate()
             delta_e = next_value - current_value
             
