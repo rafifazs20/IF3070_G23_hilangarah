@@ -1,7 +1,7 @@
 import unittest
 
 from src.models import CargoState, Ship, Vehicle, VehiclePlacement
-from src.hill_climbing import steepest_ascent_hill_climbing
+from src.steepest_ascent_hill_climbing import steepest_ascent_hill_climbing
 
 
 class HillClimbingTests(unittest.TestCase):

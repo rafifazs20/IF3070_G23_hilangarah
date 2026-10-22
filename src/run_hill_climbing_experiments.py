@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 from src.dataset import get_default_problem
 from src.models import CargoState
-from src.hill_climbing import steepest_ascent_hill_climbing
+from src.steepest_ascent_hill_climbing import steepest_ascent_hill_climbing
 
 
 def run_experiments():
