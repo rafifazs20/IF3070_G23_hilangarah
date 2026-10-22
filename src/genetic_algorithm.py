@@ -66,3 +66,24 @@ class GeneticAlgorithm:
         selected = random.choices(population, weights=shifted_fitnesses, k=1)[0]
         
         return selected.copy()
+
+    def _crossover(self, parent1: CargoState, parent2: CargoState) -> Tuple[CargoState, CargoState]:
+        import random
+        
+        # Cek masuk atau tidak
+        if random.random() > self.crossover_rate:
+            return parent1.copy(), parent2.copy()
+
+        child1 = parent1.copy()
+        child2 = parent2.copy()
+
+        # Crossover
+        for vid in self.vehicles.keys():
+            if random.random() < 0.5:
+                child1.placements[vid] = parent2.placements[vid].copy()
+                child2.placements[vid] = parent1.placements[vid].copy()
+
+        child1.invalidate_cache()
+        child2.invalidate_cache()
+        
+        return child1, child2
