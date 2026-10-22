@@ -5,6 +5,7 @@ from src.simulated_annealing import SimulatedAnnealing
 
 class TestSimulatedAnnealing(unittest.TestCase):
     def setUp(self):
+        # Setup default problem dan initial state untuk kapal dan daftar kendaraan 
         self.ship, self.vehicles = get_default_problem()
         
         self.initial_state = CargoState.generate_random_initial_state(
