@@ -2,30 +2,36 @@ from src.dataset import get_default_problem
 from src.genetic_algorithm import GeneticAlgorithm
 
 def main():
-    print("--- Testing (Inisialisasi, Fitness, & Seleksi) ---")
+    print("=== Full Test: Genetic Algorithm ===")
     ship, vehicles = get_default_problem()
     
-    ga = GeneticAlgorithm(ship, vehicles, pop_size=10)
+    print(f"Dimensi Kapal: {ship.w}x{ship.l} | Max Kapasitas: {ship.max_capacity}")
+    print(f"Jumlah Kendaraan: {len(vehicles)}")
     
-    print("\n1. Test Inisialisasi...")
-    population = ga._initialize_population()
-    print(f"Berhasil membuat {len(population)} individu acak.")
+    ga = GeneticAlgorithm(
+        ship=ship,
+        vehicles=vehicles,
+        pop_size=50,
+        mutation_rate=0.2,
+        crossover_rate=0.8,
+        max_generations=50,
+        use_bonus_objective=False
+    )
     
-    print("\n2. Test Fitness...")
-    for i in range(5):
-        state = population[i]
-        fit = ga._calculate_fitness(state)
-        oob, ovl, ex_w = state.count_violations()
-        valid_status = "VALID" if state.is_valid() else "TIDAK VALID"
-        print(f"Individu {i+1} | Status: {valid_status} | Fitness: {fit} | OOB: {oob}, Overlap: {ovl}, Overweight: {ex_w}")
-        
-    print("\n3. Test Seleksi...")
-    for i in range(3):
-        selected = ga._roulette_wheel_selection(population)
-        fit = ga._calculate_fitness(selected)
-        print(f"Seleksi ke-{i+1} terpilih individu dengan fitness: {fit}")
-        
-    print("\nTesting selesai!")
+    print("\nMenjalankan Evolusi...")
+    best_state, hist_max, hist_avg = ga.run()
+    
+    print("\n=== HASIL TERBAIK ===")
+    print(f"Total Shipping Fee: {best_state.get_total_shipping_fee()}")
+    print(f"Total Berat: {best_state.get_total_weight()} / {ship.max_capacity}")
+    
+    oob, ovl, ex_w = best_state.count_violations()
+    print(f"Pelanggaran -> Out of Bounds: {oob}, Overlap: {ovl}, Overweight: {ex_w}")
+    
+    if best_state.is_valid():
+        print("Status Akhir: VALID")
+    else:
+        print("Status Akhir: TIDAK VALID")
 
 if __name__ == "__main__":
     main()
