@@ -3,15 +3,10 @@ from typing import Dict, Tuple
 from src.models import Ship, Vehicle
 
 def get_default_problem(num_ships: int = 1) -> Tuple[Ship | list[Ship], Dict[str, Vehicle]]:
-    """
-    Menghasilkan studi kasus standar PT Intim Line sesuai contoh tabel variabel
-    pada dokumen spesifikasi (Ukuran geladak kapal w:10, l:20, MaxCapacity: 500,
-    serta daftar kendaraan dari berbagai dealer).
-    """
     ship = Ship(w=10, l=20, max_capacity=500, id="IntimLine-Deck-01")
 
     raw_vehicles = [
-        {"id": "Owen",   "w": 3, "l": 4, "fee": 60,  "weight": 50, "eta": 3},
+        {"id": "V01",   "w": 3, "l": 4, "fee": 60,  "weight": 50, "eta": 3},
         {"id": "V02",    "w": 3, "l": 5, "fee": 85,  "weight": 65, "eta": 2},
         {"id": "V03",    "w": 2, "l": 4, "fee": 45,  "weight": 35, "eta": 4},
         {"id": "V04",    "w": 4, "l": 6, "fee": 130, "weight": 95, "eta": 1},

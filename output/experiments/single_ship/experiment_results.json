@@ -54,8 +54,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -200,8 +200,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 0,
             "y": 13,
@@ -347,8 +347,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -493,8 +493,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -661,7 +661,7 @@
         671.0
       ],
       "iterations": 4,
-      "duration_seconds": 0.18479799991473556,
+      "duration_seconds": 0.12307810003403574,
       "final_valid": true,
       "termination_reason": "local_optimum"
     },
@@ -680,8 +680,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -826,8 +826,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 5,
             "y": 16,
@@ -973,8 +973,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -1119,8 +1119,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -1287,7 +1287,7 @@
         696.0
       ],
       "iterations": 4,
-      "duration_seconds": 0.14675149996764958,
+      "duration_seconds": 0.11980919993948191,
       "final_valid": true,
       "termination_reason": "local_optimum"
     },
@@ -1306,8 +1306,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -1452,8 +1452,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 1,
             "y": 3,
@@ -1599,8 +1599,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -1745,8 +1745,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -1913,7 +1913,7 @@
         683.0
       ],
       "iterations": 3,
-      "duration_seconds": 0.1236839999910444,
+      "duration_seconds": 0.09488190000411123,
       "final_valid": true,
       "termination_reason": "local_optimum"
     },
@@ -1932,8 +1932,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -2078,8 +2078,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 1,
             "y": 8,
@@ -2225,8 +2225,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -2371,8 +2371,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -2567,7 +2567,7 @@
         687.0
       ],
       "iterations": 33,
-      "duration_seconds": 0.9856398000847548,
+      "duration_seconds": 0.8324825000017881,
       "final_valid": true,
       "termination_reason": "sideways_limit_reached"
     },
@@ -2586,8 +2586,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -2732,8 +2732,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -2879,8 +2879,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -3025,8 +3025,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -3214,7 +3214,7 @@
         698.0
       ],
       "iterations": 27,
-      "duration_seconds": 0.8819800999481231,
+      "duration_seconds": 0.6811802999582142,
       "final_valid": true,
       "termination_reason": "sideways_limit_reached"
     },
@@ -3233,8 +3233,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -3379,8 +3379,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 5,
             "y": 8,
@@ -3526,8 +3526,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -3672,8 +3672,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -3859,7 +3859,7 @@
         681.0
       ],
       "iterations": 24,
-      "duration_seconds": 1.4176674999762326,
+      "duration_seconds": 0.685918299946934,
       "final_valid": true,
       "termination_reason": "sideways_limit_reached"
     },
@@ -3878,8 +3878,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -4024,8 +4024,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 5,
             "y": 5,
@@ -4171,8 +4171,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -4317,8 +4317,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -4581,7 +4581,7 @@
         670.0
       ],
       "iterations": 100,
-      "duration_seconds": 0.04956720001064241,
+      "duration_seconds": 0.028087700018659234,
       "final_valid": true,
       "termination_reason": "max_iterations"
     },
@@ -4600,8 +4600,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -4746,8 +4746,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 0,
             "y": 3,
@@ -4893,8 +4893,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -5039,8 +5039,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -5303,7 +5303,7 @@
         680.0
       ],
       "iterations": 100,
-      "duration_seconds": 0.05368770007044077,
+      "duration_seconds": 0.028036300092935562,
       "final_valid": true,
       "termination_reason": "max_iterations"
     },
@@ -5322,8 +5322,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -5468,8 +5468,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 3,
             "y": 13,
@@ -5615,8 +5615,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -5761,8 +5761,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -6024,7 +6024,7 @@
         682.0
       ],
       "iterations": 100,
-      "duration_seconds": 0.047646100050769746,
+      "duration_seconds": 0.02604519994929433,
       "final_valid": true,
       "termination_reason": "max_iterations"
     },
@@ -6043,8 +6043,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -6189,8 +6189,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -6336,8 +6336,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -6482,8 +6482,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -6657,7 +6657,7 @@
         691.0
       ],
       "iterations": 9,
-      "duration_seconds": 0.43580129998736084,
+      "duration_seconds": 0.23371749999932945,
       "final_valid": true,
       "termination_reason": "max_restarts_reached"
     },
@@ -6676,8 +6676,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -6822,8 +6822,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -6969,8 +6969,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -7115,8 +7115,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -7287,7 +7287,7 @@
         691.0
       ],
       "iterations": 7,
-      "duration_seconds": 0.38727020006626844,
+      "duration_seconds": 0.2085441000526771,
       "final_valid": true,
       "termination_reason": "max_restarts_reached"
     },
@@ -7306,8 +7306,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -7452,8 +7452,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -7599,8 +7599,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -7745,8 +7745,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -7918,7 +7918,7 @@
         691.0
       ],
       "iterations": 8,
-      "duration_seconds": 0.4200917000416666,
+      "duration_seconds": 0.22797580005135387,
       "final_valid": true,
       "termination_reason": "max_restarts_reached"
     },
@@ -7937,8 +7937,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -8083,8 +8083,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 5,
             "y": 0,
@@ -8230,8 +8230,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -8376,8 +8376,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -8640,7 +8640,7 @@
         663.0
       ],
       "iterations": 100,
-      "duration_seconds": 0.05649065971374512,
+      "duration_seconds": 0.03215193748474121,
       "final_valid": true,
       "stuck_frequency": 0
     },
@@ -8659,8 +8659,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -8805,8 +8805,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 4,
             "y": 10,
@@ -8952,8 +8952,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -9098,8 +9098,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 6,
             "y": 12,
@@ -9241,7 +9241,7 @@
         {
           "ship_id": "IntimLine-Deck-01",
           "vehicle_ids": [
-            "Owen",
+            "V01",
             "V03",
             "V06",
             "V08",
@@ -9363,7 +9363,7 @@
         663.0
       ],
       "iterations": 100,
-      "duration_seconds": 0.049959659576416016,
+      "duration_seconds": 0.02830338478088379,
       "final_valid": true,
       "stuck_frequency": 0
     },
@@ -9382,8 +9382,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -9528,8 +9528,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -9675,8 +9675,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -9821,8 +9821,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -10083,7 +10083,7 @@
         608.0
       ],
       "iterations": 100,
-      "duration_seconds": 0.03387713432312012,
+      "duration_seconds": 0.017455577850341797,
       "final_valid": true,
       "stuck_frequency": 0
     },
@@ -10102,8 +10102,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -10248,8 +10248,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -10395,8 +10395,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -10541,8 +10541,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -10754,7 +10754,7 @@
         673.0
       ],
       "iterations": 50,
-      "duration_seconds": 0.9677567000035197,
+      "duration_seconds": 0.5134514999808744,
       "final_valid": true,
       "average_fitness_history": [
         626.15,
@@ -10826,8 +10826,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -10972,8 +10972,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 0,
             "y": 5,
@@ -11119,8 +11119,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -11265,8 +11265,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -11527,7 +11527,7 @@
         680.0
       ],
       "iterations": 100,
-      "duration_seconds": 1.853920300025493,
+      "duration_seconds": 1.0367701000068337,
       "final_valid": true,
       "average_fitness_history": [
         632.7,
@@ -11649,8 +11649,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -11795,8 +11795,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 6,
             "y": 2,
@@ -11942,8 +11942,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -12088,8 +12088,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 6,
             "y": 2,
@@ -12231,7 +12231,7 @@
         {
           "ship_id": "IntimLine-Deck-01",
           "vehicle_ids": [
-            "Owen",
+            "V01",
             "V03",
             "V06",
             "V07",
@@ -12400,7 +12400,7 @@
         686.0
       ],
       "iterations": 150,
-      "duration_seconds": 2.827962600043975,
+      "duration_seconds": 1.5606698000337929,
       "final_valid": true,
       "average_fitness_history": [
         623.85,
@@ -12572,8 +12572,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -12718,8 +12718,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 4,
             "y": 13,
@@ -12865,8 +12865,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -13011,8 +13011,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 4,
             "y": 13,
@@ -13154,7 +13154,7 @@
         {
           "ship_id": "IntimLine-Deck-01",
           "vehicle_ids": [
-            "Owen",
+            "V01",
             "V03",
             "V04",
             "V06",
@@ -13224,7 +13224,7 @@
         676.0
       ],
       "iterations": 50,
-      "duration_seconds": 3.5947267999872565,
+      "duration_seconds": 1.9172028999309987,
       "final_valid": true,
       "average_fitness_history": [
         630.25,
@@ -13296,8 +13296,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -13442,8 +13442,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -13589,8 +13589,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -13735,8 +13735,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -13997,7 +13997,7 @@
         686.0
       ],
       "iterations": 100,
-      "duration_seconds": 6.638064600061625,
+      "duration_seconds": 3.7313294999767095,
       "final_valid": true,
       "average_fitness_history": [
         625.75,
@@ -14119,8 +14119,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -14265,8 +14265,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -14412,8 +14412,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -14558,8 +14558,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -14869,7 +14869,7 @@
         695.0
       ],
       "iterations": 150,
-      "duration_seconds": 10.427332399995066,
+      "duration_seconds": 5.595659699989483,
       "final_valid": true,
       "average_fitness_history": [
         636.7,
@@ -15041,8 +15041,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -15187,8 +15187,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 7,
             "y": 16,
@@ -15334,8 +15334,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -15480,8 +15480,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 7,
             "y": 16,
@@ -15623,7 +15623,7 @@
         {
           "ship_id": "IntimLine-Deck-01",
           "vehicle_ids": [
-            "Owen",
+            "V01",
             "V03",
             "V04",
             "V05",
@@ -15692,7 +15692,7 @@
         680.0
       ],
       "iterations": 50,
-      "duration_seconds": 6.76386269996874,
+      "duration_seconds": 4.0893105999566615,
       "final_valid": true,
       "average_fitness_history": [
         632.3,
@@ -15764,8 +15764,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -15910,8 +15910,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -16057,8 +16057,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -16203,8 +16203,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -16466,7 +16466,7 @@
         691.0
       ],
       "iterations": 100,
-      "duration_seconds": 15.085020200000145,
+      "duration_seconds": 10.025540299946442,
       "final_valid": true,
       "average_fitness_history": [
         624.7666666666667,
@@ -16588,8 +16588,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -16734,8 +16734,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 7,
             "y": 8,
@@ -16881,8 +16881,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -17027,8 +17027,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -17339,7 +17339,7 @@
         692.0
       ],
       "iterations": 150,
-      "duration_seconds": 22.720870300079696,
+      "duration_seconds": 14.446791099966504,
       "final_valid": true,
       "average_fitness_history": [
         624.3,
@@ -17511,8 +17511,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -17657,8 +17657,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -17804,8 +17804,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -17950,8 +17950,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -18162,7 +18162,7 @@
         688.0
       ],
       "iterations": 50,
-      "duration_seconds": 10.812015599920414,
+      "duration_seconds": 6.957375500001945,
       "final_valid": true,
       "average_fitness_history": [
         626.3375,
@@ -18234,8 +18234,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -18380,8 +18380,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -18527,8 +18527,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -18673,8 +18673,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -18934,7 +18934,7 @@
         691.0
       ],
       "iterations": 100,
-      "duration_seconds": 23.361682799994014,
+      "duration_seconds": 15.111908999970183,
       "final_valid": true,
       "average_fitness_history": [
         632.4875,
@@ -19056,8 +19056,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -19202,8 +19202,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -19349,8 +19349,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -19495,8 +19495,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -19808,7 +19808,7 @@
         688.0
       ],
       "iterations": 150,
-      "duration_seconds": 39.018437699996866,
+      "duration_seconds": 25.06510920007713,
       "final_valid": true,
       "average_fitness_history": [
         621.85,
@@ -19980,8 +19980,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -20126,8 +20126,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -20273,8 +20273,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -20419,8 +20419,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -20631,7 +20631,7 @@
         688.0
       ],
       "iterations": 50,
-      "duration_seconds": 16.796842099982314,
+      "duration_seconds": 11.21857100003399,
       "final_valid": true,
       "average_fitness_history": [
         626.85,
@@ -20703,8 +20703,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -20849,8 +20849,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -20996,8 +20996,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -21142,8 +21142,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -21405,7 +21405,7 @@
         686.0
       ],
       "iterations": 100,
-      "duration_seconds": 35.84178699995391,
+      "duration_seconds": 23.287381900008768,
       "final_valid": true,
       "average_fitness_history": [
         631.97,
@@ -21527,8 +21527,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -21673,8 +21673,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 6,
             "y": 8,
@@ -21820,8 +21820,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -21966,8 +21966,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -22277,7 +22277,7 @@
         698.0
       ],
       "iterations": 150,
-      "duration_seconds": 49.10525349993259,
+      "duration_seconds": 31.673831599997357,
       "final_valid": true,
       "average_fitness_history": [
         625.97,
@@ -22449,8 +22449,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -22595,8 +22595,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -22742,8 +22742,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -22888,8 +22888,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -23100,7 +23100,7 @@
         686.0
       ],
       "iterations": 50,
-      "duration_seconds": 23.511391699896194,
+      "duration_seconds": 15.062222999986261,
       "final_valid": true,
       "average_fitness_history": [
         625.8416666666667,
@@ -23172,8 +23172,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -23318,8 +23318,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 7,
             "y": 13,
@@ -23465,8 +23465,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -23611,8 +23611,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": true,
             "x": 7,
             "y": 13,
@@ -23754,7 +23754,7 @@
         {
           "ship_id": "IntimLine-Deck-01",
           "vehicle_ids": [
-            "Owen",
+            "V01",
             "V03",
             "V04",
             "V06",
@@ -23872,7 +23872,7 @@
         688.0
       ],
       "iterations": 100,
-      "duration_seconds": 36.43801629997324,
+      "duration_seconds": 29.18979779991787,
       "final_valid": true,
       "average_fitness_history": [
         632.2916666666666,
@@ -23994,8 +23994,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -24140,8 +24140,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -24287,8 +24287,8 @@
           "max_capacity": 500
         },
         "vehicles": {
-          "Owen": {
-            "id": "Owen",
+          "V01": {
+            "id": "V01",
             "w": 3,
             "l": 4,
             "shipping_fee": 60,
@@ -24433,8 +24433,8 @@
           }
         },
         "placements": {
-          "Owen": {
-            "vehicle_id": "Owen",
+          "V01": {
+            "vehicle_id": "V01",
             "in_ship": false,
             "x": -1,
             "y": -1,
@@ -24746,7 +24746,7 @@
         684.0
       ],
       "iterations": 150,
-      "duration_seconds": 41.518024099990726,
+      "duration_seconds": 47.11749959993176,
       "final_valid": true,
       "average_fitness_history": [
         628.3,
