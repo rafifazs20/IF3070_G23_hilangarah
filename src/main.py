@@ -104,7 +104,6 @@ def main() -> None:
     if args.initial_temperature <= 0 or args.min_temperature < 0 or not 0 < args.cooling_rate < 1:
         parser.error("parameter temperatur tidak valid")
 
-    ship, vehicles = load_problem_from_json(args.data) if args.data else get_default_problem()
     labels = (
         "Steepest Ascent Hill-Climbing",
         "Hill-Climbing with Sideways Move",

@@ -99,6 +99,7 @@ class GeneticAlgorithm:
     def run(self) -> Tuple[CargoState, List[float], List[float]]:
         population = self._initialize_population()
         best_state = max(population, key=self._calculate_fitness)
+        self.initial_best_state = best_state.copy()
         
         for generation in range(self.max_generations):
             # Evaluasi populasi saat ini
@@ -132,8 +133,12 @@ class GeneticAlgorithm:
                     new_population.append(c2)
 
             population = new_population
-            
-            if (generation + 1) % 10 == 0:
-                print(f"Gen {generation+1}/{self.max_generations} | Max Fit: {gen_max_fit:.2f} | Avg Fit: {gen_avg_fit:.2f}")
 
+            if (generation + 1) % 10 == 0:
+                print(
+                    f"  Generasi {generation + 1}/{self.max_generations} | "
+                    f"fitness maks: {gen_max_fit:.2f} | "
+                    f"fitness rata-rata: {gen_avg_fit:.2f}"
+                )
+            
         return best_state, self.history_max_fitness, self.history_avg_fitness
