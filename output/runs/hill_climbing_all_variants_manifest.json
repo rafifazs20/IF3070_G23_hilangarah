@@ -1,0 +1,63 @@
+{
+  "experiment": "Hill-Climbing Variants",
+  "created_at_utc": "2026-10-22T06:14:02.920702+00:00",
+  "problem": {
+    "ship_id": "IntimLine-Deck-01",
+    "ship_width": 10,
+    "ship_length": 20,
+    "max_capacity": 500,
+    "vehicle_count": 18,
+    "vehicle_ids": [
+      "Owen",
+      "V02",
+      "V03",
+      "V04",
+      "V05",
+      "V06",
+      "V07",
+      "V08",
+      "V09",
+      "V10",
+      "V11",
+      "V12",
+      "V13",
+      "V14",
+      "V15",
+      "V16",
+      "V17",
+      "V18"
+    ]
+  },
+  "configuration": {
+    "repeats_per_variant": 3,
+    "seed_base": 2301,
+    "max_iterations": 1000,
+    "max_sideways_moves": 100,
+    "max_neighbor_attempts": 100,
+    "max_restarts": 3,
+    "max_iterations_per_restart": 1000,
+    "use_bonus_objective": false,
+    "objective": "total shipping fee of valid placed vehicles",
+    "seed_policy": "Each replicate uses one shared seeded initial state for Steepest Ascent, Sideways Move, and Stochastic HC. Algorithm randomness is seeded separately per variant. Random Restart generates its own random initial states and records the first restart as initial_state.",
+    "variant_order": [
+      "steepest_ascent",
+      "sideways_move",
+      "stochastic",
+      "random_restart"
+    ]
+  },
+  "artifact_files": [
+    "hill_climbing_all_variants_results.json",
+    "hill_climbing_all_variants_summary.csv",
+    "hill_climbing_all_variants_objective_history.csv"
+  ],
+  "validation": {
+    "variants": 4,
+    "repeats_per_variant": 3,
+    "expected_runs": 12,
+    "actual_runs": 12,
+    "all_initial_states_valid": true,
+    "all_final_states_valid": true,
+    "all_objective_histories_nondecreasing": true
+  }
+}
