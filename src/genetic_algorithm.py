@@ -34,3 +34,23 @@ class GeneticAlgorithm:
             population.append(state)
             
         return population
+
+    # Penyesuaian CargoState Serialization punya Rafif
+    def _calculate_fitness(self, state: CargoState) -> float:
+        oob, ovl, ex_w = state.count_violations()
+        base_fee = state.get_total_shipping_fee()
+
+        if oob == 0 and ovl == 0 and ex_w == 0:
+            if not self.use_bonus_objective:
+                return float(base_fee)
+            else:
+                bonus_score = 0.0
+                for vid, p in state.placements.items():
+                    if p.in_ship:
+                        v = self.vehicles[vid]
+                        urgency_bonus = v.shipping_fee * (1.0 / max(1, v.eta)) * 0.1
+                        bonus_score += v.shipping_fee + urgency_bonus
+                return round(bonus_score, 4)
+        else:
+            penalty = (oob * 500.0) + (ovl * 500.0) + (ex_w * 50.0)
+            return float(base_fee) - penalty
